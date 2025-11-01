@@ -18,13 +18,13 @@ class UndrawSelect extends Select {
             ->label('Undraw Illustration')
             ->searchable()
             ->allowHtml()
-            ->getSearchResultsUsing(function (string $search) {
+            ->getSearchResultsUsing(function (string $search) use ($static) {
                 /** @var \Undraw\UndrawClient $u */
                 $u = app(\Undraw\UndrawClient::class);
 
                 // Vraćamo [value => HTML label]
                 return collect($u->search($search, $static->limit))
-                    ->mapWithKeys(function ($i) {
+                    ->mapWithKeys(function ($i) use ($static) {
                         $url = $i->mediaUrl;
                         $title = e($i->title);
 
@@ -36,7 +36,7 @@ HTML;
                     })
                     ->all();
             })
-            ->getOptionLabelUsing(function ($value) {
+            ->getOptionLabelUsing(function ($value) use ($static) {
                 if (blank($value)) return null;
 
                 /** @var \Undraw\UndrawClient $u */
@@ -44,7 +44,7 @@ HTML;
                 $title = e(optional($u->getSvg($value))->title ?? $value);
 
                 return <<<HTML
-<div class="flex items-center gap-2"><img src="{$value}" alt="{$title}" class="{$static->searchResultSize} object-contain" /></div>
+<div class="flex items-center gap-2"><img src="{$value}" alt="{$title}" class="{$static->selectedOptionSize} object-contain" /></div>
 HTML;
             })
             ->extraAttributes(['class' => 'undraw-select'])
@@ -56,6 +56,18 @@ HTML;
 
     public function limit (int $limit): static {
         $this->limit = $limit;
+
+        return $this;
+    }
+
+    public function searchResultSize (string $searchResultSize): static {
+        $this->searchResultSize = $searchResultSize;
+
+        return $this;
+    }
+
+    public function selectedOptionSize (string $selectedOptionSize): static {
+        $this->selectedOptionSize = $selectedOptionSize;
 
         return $this;
     }
