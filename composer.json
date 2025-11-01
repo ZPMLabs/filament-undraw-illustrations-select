@@ -1,6 +1,6 @@
 {
   "name": "zpmlabs/filament-undraw",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Filament select component for undraw illustrations.",
   "type": "library",
   "keywords": [
