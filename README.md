@@ -24,8 +24,6 @@ php artisan vendor:publish --tag=filament-undraw-views
 
 ## Usage
 
-
-
 ```php
 
 use ZPMLabs\FilamentUndraw\Forms\Components\UndrawSelect;
@@ -35,3 +33,7 @@ UndrawSelect::make('svg_url'),
 ```
 
 *** Since this is a select component, you can use other chaining methods, but keep in mind, this one has a custom view with custom styles and same official  component. ***
+
+## Expanding Undraw Usage
+
+In case you want to expand this in some other field or custom component you can check the [base php package](https://github.com/ZPMLabs/undraw-php) for undraw.
